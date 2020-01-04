@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, make_response, send_file, redirect, url_for
 
-app = Flask(__name__, static_folder='../vue/dist/static', template_folder='../vue/dist')
+app = Flask(__name__, static_folder='./vue/dist/static', template_folder='./vue/dist')
 
 @app.route('/')
 def index():
