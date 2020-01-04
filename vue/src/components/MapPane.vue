@@ -7,16 +7,27 @@
             :zoom="zoom"
             @load="onloaded"
         >
-            <MglNavigationControl
-                position="top-left"
-            ></MglNavigationControl>
+        <MglNavigationControl
+            position="top-left"
+        ></MglNavigationControl>
+        <MglMarker
+            v-for="event in events"
+            :key="event.event_id"
+            :coordinates="latlonAry(event)"
+            color='green'
+        >
+            <MglPopup>
+                <div>
+                    <a :href="event.event_url"><h6>{{ event.title }}</h6></a>
+                    <p>{{ event.catch }}</p>
+                    <table>
+                        <tr><td>開催日時</td><td>{{ dateToString(event.started_at) }}</td></tr>
+                        <tr><td>会場</td><td>{{ event.place }}</td></tr>
+                    </table>
+                </div>
+            </MglPopup>
+        </MglMarker>
         </MglMap>
-        <b-button
-          size="lg"
-          variant="outline-primary"
-          @click="btnClicked">
-          Bootstrap Button
-        </b-button>
     </div>
 </template>
 
@@ -24,20 +35,27 @@
     import Mapbox from "mapbox-gl";
     import {
         MglMap,
-        MglNavigationControl
+        MglNavigationControl,
+        MglMarker,
+        MglPopup
     } from "vue-mapbox";
 
     export default {
         name: 'MapPane',
         components: {
             MglMap,
-            MglNavigationControl
+            MglNavigationControl,
+            MglMarker,
+            MglPopup
+        },
+        props: {
+            events:Array
         },
         data() {
             return {
               center:[139.0, 39.0],
               zoom:4,
-              mapStyle: this.makeMapStyle("https://tile.mierune.co.jp/mierune/{z}/{x}/{y}.png"),
+              mapStyle: this.makeMapStyle("https://tile.openstreetmap.jp/{z}/{x}/{y}.png", "map data © OpenStreetMap contributors"),
             }
         },
         created() {
@@ -46,14 +64,15 @@
             onloaded: function() {
                 this.map = Mapbox
             },
-            makeMapStyle: function(tileUrl) {
+            makeMapStyle: function(tileUrl, attribution) {
                 return {
                     "version": 8,
                     "sources": {
                         "Raster": {
                             "type": "raster",
                             "tiles": [ tileUrl ],
-                            "tileSize": 256
+                            "tileSize": 256,
+                            "attribution": attribution
                         }
                     },
                     "layers": [{
@@ -65,12 +84,19 @@
                     }]
                 }
             },
-            btnClicked: function() {
-              fetch("/api/?keyword_or=python")
-              .then(response => {
-                console.log(response.json());
-              })
+            latlonAry: function(event) {
+                return [event.lon, event.lat]
+            },
+            dateToString: function(dateTime) {
+                let date = new Date(dateTime)
+                let year = date.getFullYear()
+                let month = date.getMonth() + 1
+                let day = date.getDate()
+                let time = date.getTime()
+                return String(year) + "/" + String(month) + "/" + String(day)
             }
+        },
+        computed: {
         }
     }
 </script>

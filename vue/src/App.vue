@@ -1,22 +1,36 @@
 <template>
-  <div id="app"
-  >
+  <div id="app">
     <Header />
-    <MapPane />
-    うんこ
+    <SearchPanel @onGetApiData="showEvents" />
+    <MapPane :events="events" />
+    <EventsList :events="events" />
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
+import SearchPanel from './components/SearchPanel.vue'
 import MapPane from './components/MapPane.vue'
+import EventsList from './components/EventsList.vue'
 
 export default {
   name: 'app',
   components: {
     Header,
-    MapPane
+    SearchPanel,
+    MapPane,
+    EventsList
   },
+  data() {
+    return {
+      events:[]
+    }
+  },
+  methods: {
+    showEvents: function(jsonData) {
+      this.events = jsonData.events
+    }
+  }
 }
 </script>
 
