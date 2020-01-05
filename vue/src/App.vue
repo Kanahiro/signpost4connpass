@@ -4,6 +4,7 @@
     <SearchPanel @onGetApiData="showEvents" />
     <MapPane :events="events" />
     <EventsList :events="events" v-if="events.length > 0" />
+    <Footer />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import Header from './components/Header.vue'
 import SearchPanel from './components/SearchPanel.vue'
 import MapPane from './components/MapPane.vue'
 import EventsList from './components/EventsList.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'app',
@@ -20,6 +22,7 @@ export default {
     SearchPanel,
     MapPane,
     EventsList,
+    Footer
   },
   data() {
     return {
