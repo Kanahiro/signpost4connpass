@@ -5,28 +5,6 @@
             >
             <label for="keyword">キーワード：</label>
             <b-form-input type="search" v-model="keyword" placeholder="例：python もくもく会"></b-form-input>
-            <label for="pref">開催地：</label>
-            <b-form-select
-                :value="null"
-                :options="{ '1': 'One', '2': 'Two', '3': 'Three' }"
-                id="pref"
-                >
-                <template v-slot:first>
-                    <option :value="null">Choose...</option>
-                </template>
-            </b-form-select>
-            <label for="city">開催地（詳細）：</label>
-            <b-form-select
-                :value="null"
-                :options="{ '1': 'One', '2': 'Two', '3': 'Three' }"
-                id="city"
-                >
-                <template v-slot:first>
-                    <option :value="null">Choose...</option>
-                </template>
-            </b-form-select>
-        </b-form>
-        <b-form inline class="inlineForm" @submit.prevent="exec">
             <label for="startDate">開催日：</label>
             <b-form-input
                 type="date"
@@ -39,7 +17,10 @@
                 id="startMonth"
                 v-model="startMonth">
             </b-form-input>
-            <b-button variant="outline-secondary" @click="onSearch">検索</b-button>
+            <b-button variant="outline-secondary" @click="onSearch">
+                <span v-if="!isSearching">検索</span>
+                <b-spinner small v-if="isSearching" label="Spinning"></b-spinner>
+            </b-button>
         </b-form>
     </div>
 </template>
@@ -53,7 +34,8 @@
                 startDate:"",
                 startMonth:"",
                 pref:"",
-                city:""
+                city:"",
+                isSearching:false
             }
         },
         created() {
@@ -81,12 +63,14 @@
                 return year + "-" + month + "-" + day
             },
             fetchApi: function(queryUrl) {
+                this.isSearching = true
                 fetch("/api/?" + queryUrl)
                 .then(response => {
                     return response.json()
                 })
                 .then(data => {
                     this.$emit("onGetApiData", data)
+                    this.isSearching = false
                 })
             },
             makeQueryUrl: function(queryObj) {
@@ -125,7 +109,6 @@
                 if (!this.validateQueryObj(queryObj)) { return }
 
                 let queryUrl = this.makeQueryUrl(queryObj)
-                console.log(queryUrl)
                 this.fetchApi(queryUrl)
             },
         }

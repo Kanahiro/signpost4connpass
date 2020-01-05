@@ -24,7 +24,7 @@ def getApi():
         "owner_nickname":owner_nickname,
         "start":start,
         "order":order,
-        "count":500
+        "count":100
     }
 
     params = {}

@@ -53,8 +53,8 @@
         },
         data() {
             return {
-              center:[139.0, 39.0],
-              zoom:4,
+              center:[139.0, 38.5],
+              zoom:3.5,
               mapStyle: this.makeMapStyle("https://tile.openstreetmap.jp/{z}/{x}/{y}.png", "map data © OpenStreetMap contributors"),
             }
         },
@@ -103,15 +103,8 @@
 
 <style scoped>
     .mapPane {
-        height: 500px;
+        height: 400px;
         margin: 0;
-    }
-
-    .MglMap {
         border: 1px solid #000000;
-    }
-
-    .tile-selector {
-        width: 100%;
     }
 </style>

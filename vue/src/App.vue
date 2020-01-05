@@ -3,7 +3,7 @@
     <Header />
     <SearchPanel @onGetApiData="showEvents" />
     <MapPane :events="events" />
-    <EventsList :events="events" />
+    <EventsList :events="events" v-if="events.length > 0" />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     Header,
     SearchPanel,
     MapPane,
-    EventsList
+    EventsList,
   },
   data() {
     return {

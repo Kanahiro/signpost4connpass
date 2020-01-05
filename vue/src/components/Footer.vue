@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="footer">
         <b-navbar toggleable="lg" type="dark" variant="dark">
             <b-navbar-brand href="/">Signpost for Connpass</b-navbar-brand>
 
@@ -36,4 +36,7 @@
 </script>
 
 <style scoped>
+    .footer {
+        margin: 50px 0 0 0;
+    }
 </style>
