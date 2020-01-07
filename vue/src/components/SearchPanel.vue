@@ -17,7 +17,7 @@
                 id="startMonth"
                 v-model="startMonth">
             </b-form-input>
-            <b-button variant="outline-secondary" @click="onSearch">
+            <b-button class="submitButton" type="submit" @click="onSearch">
                 <span v-if="!isSearching">検索</span>
                 <b-spinner small v-if="isSearching" label="Spinning"></b-spinner>
             </b-button>
@@ -72,6 +72,11 @@
                     this.$emit("onGetApiData", data)
                     this.isSearching = false
                 })
+                .catch(error => {
+                    console.log(error)
+                    alert("エラーが発生しました。")
+                    this.isSearching = false
+                });
             },
             makeQueryUrl: function(queryObj) {
                 let url = ""
@@ -116,7 +121,7 @@
 </script>
 
 <style scoped>
-    .inlineForm {
+    .submitButton {
         margin: 10px 0;
     }
     label {

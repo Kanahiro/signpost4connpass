@@ -2,8 +2,11 @@
   <div id="app">
     <Header />
     <SearchPanel @onGetApiData="showEvents" />
-    <MapPane :events="events" />
-    <EventsList :events="events" v-if="events.length > 0" />
+    <MapPane id="mapPane" :events="events" />
+    <EventsList
+      v-if="events.length > 0"
+      :events="events"
+    />
     <Footer />
   </div>
 </template>
@@ -26,7 +29,7 @@ export default {
   },
   data() {
     return {
-      events:[]
+      events:[],
     }
   },
   methods: {
@@ -44,5 +47,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#mapPane {
+  margin:0 5px;
 }
 </style>

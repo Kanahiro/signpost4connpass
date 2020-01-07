@@ -1,20 +1,24 @@
 <template>
     <div class="eventsList">
-        <table striped hover>
-            <tr>
-                <th>開催日</th>
-                <th>タイトル</th>
-                <th>タグ</th>
-            </tr>
-            <tr
+        <b-table-simple hover small>
+            <b-thead>
+            <b-tr>
+                <b-th>開催日</b-th>
+                <b-th>タイトル</b-th>
+                <b-th>タグ</b-th>
+            </b-tr>
+            </b-thead>
+            <b-tbody>
+            <b-tr
                 v-for="event in events"
                 :key="event.event_id"
             >
-                <td>{{ dateToString(event.started_at) }}</td>
-                <td><a :href="event.event_url">{{ event.title }}</a></td>
-                <td>{{ event.hash_tag }}</td>
-            </tr>
-        </table>
+                <b-th class="text-center">{{ dateToString(event.started_at) }}</b-th>
+                <b-th class="text-left"><a :href="event.event_url">{{ event.title }}</a></b-th>
+                <b-td>{{ event.hash_tag }}</b-td>
+            </b-tr>
+            </b-tbody>
+        </b-table-simple>
     </div>
 </template>
 
@@ -23,12 +27,6 @@
         name: 'EventsList',
         props: {
             events:Array
-        },
-        data() {
-            return {
-            }
-        },
-        created() {
         },
         methods: {
             dateToString: function(dateTime) {

@@ -35,7 +35,6 @@ def getApi():
 
 
     p = urllib.parse.urlencode(params)
-    print(p)
     url = "https://connpass.com/api/v1/event/?" + p
 
     with urllib.request.urlopen(url) as res:

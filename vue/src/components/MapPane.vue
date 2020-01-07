@@ -5,6 +5,8 @@
             :mapStyle="mapStyle"
             :center="center"
             :zoom="zoom"
+            :minZoom="zoom"
+            :maxZoom="maxZoom"
             @load="onloaded"
         >
         <MglNavigationControl
@@ -55,10 +57,9 @@
             return {
               center:[139.0, 38.5],
               zoom:3.5,
+              maxZoom:17,
               mapStyle: this.makeMapStyle("https://tile.openstreetmap.jp/{z}/{x}/{y}.png", "map data © OpenStreetMap contributors"),
             }
-        },
-        created() {
         },
         methods: {
             onloaded: function() {
